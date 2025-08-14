@@ -108,7 +108,7 @@ header p {
   border-radius: 18px;
   padding: 2rem clamp(1.5rem, 5vw, 2.5rem); /* Responsive padding */
   box-shadow: 0 2px 24px 0 rgba(28, 37, 38, 0.18);
-  max-width: min(400px, 90vw); /* Better max-width handling */
+  max-width: min(500px, 90vw); /* Better max-width handling */
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -450,3 +450,4 @@ body.light-mode .rule-list li {
     padding: 0.75rem;
   }
 }
+
