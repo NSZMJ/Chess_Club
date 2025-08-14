@@ -41,6 +41,7 @@
     <div class="container">
       <!-- Main Game Section -->
       <main class="game-code-section">
+        
         <input 
           type="text" 
           id="codeInput" 
@@ -58,80 +59,36 @@
 
       <!-- How to Play Section -->
       <section class="rules-section">
-        <h2 class="rules-title">How to Play Chess</h2>
+        <h2 class="rules-title">How to Play</h2>
         
         <div class="rules-grid">
           <div class="rule-card">
-            <h3>Objective</h3>
-            <p>Checkmate your opponent's king to win the game. This means the king is under attack and cannot escape capture.</p>
+            <h3>Getting Started</h3>
+            <p>Create a new game or join an existing one using a game code. Share the code with your friend to start playing together.</p>
           </div>
 
           <div class="rule-card">
-            <h3>Setup</h3>
-            <p>The game starts with each player having 16 pieces: 1 king, 1 queen, 2 rooks, 2 bishops, 2 knights, and 8 pawns. White always moves first.</p>
+            <h3>Making Moves</h3>
+            <p>On desktop: Click and drag pieces to move them. On mobile: Tap a piece to select it, then tap the destination square.</p>
           </div>
 
           <div class="rule-card">
-            <h3>Piece Movements</h3>
-            <div class="piece-rules">
-              <div class="rule-item">
-                <strong>King:</strong> Moves one square in any direction (horizontally, vertically, or diagonally).
-              </div>
-              <div class="rule-item">
-                <strong>Queen:</strong> Moves any number of squares in any direction.
-              </div>
-              <div class="rule-item">
-                <strong>Rook:</strong> Moves any number of squares horizontally or vertically.
-              </div>
-              <div class="rule-item">
-                <strong>Bishop:</strong> Moves any number of squares diagonally.
-              </div>
-              <div class="rule-item">
-                <strong>Knight:</strong> Moves in an L-shape: 2 squares in one direction, then 1 square perpendicular.
-              </div>
-              <div class="rule-item">
-                <strong>Pawn:</strong> Moves forward one square, captures diagonally. On first move, can advance 2 squares.
-              </div>
-            </div>
-          </div>
-
-          <div class="rule-card">
-            <h3>Special Moves</h3>
-            <div class="special-moves">
-              <div class="rule-item">
-                <strong>Castling:</strong> King moves 2 squares toward a rook, and the rook moves to the square the king passed over.
-              </div>
-              <div class="rule-item">
-                <strong>En Passant:</strong> A pawn can capture an opponent's pawn that just moved 2 squares forward.
-              </div>
-              <div class="rule-item">
-                <strong>Pawn Promotion:</strong> When a pawn reaches the opposite end, it can be promoted to any other piece.
-              </div>
-            </div>
-          </div>
-
-          <div class="rule-card">
-            <h3>Game Rules</h3>
+            <h3>Game Features</h3>
             <ul class="rule-list">
-              <li>Players take turns moving one piece at a time</li>
-              <li>You cannot move through other pieces (except knights)</li>
-              <li>You can capture opponent pieces by moving to their square</li>
-              <li>Check occurs when your king is under attack</li>
-              <li>You must get out of check on your next move</li>
-              <li>Checkmate ends the game</li>
-              <li>Stalemate (no legal moves) results in a draw</li>
+              <li>Real-time multiplayer gameplay</li>
+              <li>Automatic move validation</li>
+              <li>Game state tracking (check, checkmate, draw)</li>
+              <li>Move history and PGN notation</li>
             </ul>
           </div>
 
           <div class="rule-card">
-            <h3>Tips for Beginners</h3>
+            <h3>Tips</h3>
             <ul class="rule-list">
-              <li>Control the center of the board</li>
-              <li>Develop your pieces early</li>
-              <li>Protect your king</li>
-              <li>Look for tactical opportunities</li>
-              <li>Think several moves ahead</li>
-              <li>Practice common opening principles</li>
+              <li>Make sure your friend has the correct game code</li>
+              <li>Stay connected to avoid disconnection</li>
+              <li>Use the theme toggle for your preferred view</li>
+              <li>Games are saved until both players disconnect</li>
             </ul>
           </div>
         </div>
@@ -196,4 +153,3 @@
     </script>
   </body>
 </html>
-
