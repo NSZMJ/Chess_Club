@@ -12,7 +12,7 @@ body {
   transition: background 0.3s, color 0.3s;
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   color: #e0f7fa;
-  padding-top: 2rem;
+  padding-top: clamp(1rem, 3vw, 2rem);
 }
 
 body.dark-mode::before {
@@ -26,7 +26,7 @@ body.dark-mode::before {
   pointer-events: none;
   background-image: url("../svg/chess.svg");
   background-repeat: repeat-x;
-  background-size: 700px 80vh;
+  background-size: clamp(400px, 50vw, 700px) 80vh;
   background-position: top center;
   opacity: 5%;
 }
@@ -46,13 +46,13 @@ body.light-mode::before {
   pointer-events: none;
   background-image: url("../svg/chessblack.svg");
   background-repeat: repeat-x;
-  background-size: 700px 80vh;
+  background-size: clamp(400px, 50vw, 700px) 80vh;
   background-position: top center;
   opacity: 5%;
 }
 
 .container {
-  width: 100vw;
+  width: min(100vw, 100%);
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -60,24 +60,27 @@ body.light-mode::before {
   justify-content: flex-start;
   position: relative;
   z-index: 1;
-  padding: 2rem 1rem;
+  padding: clamp(1rem, 4vw, 2rem) clamp(0.5rem, 3vw, 1rem);
+  box-sizing: border-box;
 }
 
 /* Header styles */
 header {
   text-align: center;
-  margin-bottom: 2rem;
+  margin-bottom: clamp(1rem, 4vw, 2rem);
   position: relative;
   z-index: 2;
+  width: 100%;
+  max-width: 800px;
 }
 
 .logo-container {
-  margin-bottom: 1.5rem;
+  margin-bottom: clamp(1rem, 3vw, 1.5rem);
 }
 
 .top-center-svg {
-  width: 61px;
-  height: 115px;
+  width: clamp(40px, 8vw, 61px);
+  height: clamp(75px, 15vw, 115px);
   color: #e0f7fa;
   transition: color 0.3s;
 }
@@ -87,28 +90,31 @@ body.light-mode .top-center-svg {
 }
 
 header h1 {
-  font-size: 3rem;
+  font-size: clamp(2rem, 8vw, 3rem);
   font-weight: 700;
-  margin-bottom: 0.5rem;
+  margin-bottom: clamp(0.25rem, 1vw, 0.5rem);
   background: linear-gradient(135deg, #4caf50, #2196f3);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  line-height: 1.1;
 }
 
 header p {
-  font-size: 1.125rem;
+  font-size: clamp(0.875rem, 2.5vw, 1.125rem);
   opacity: 0.8;
   margin: 0;
   line-height: 1.5;
+  max-width: 600px;
+  margin: 0 auto;
 }
 
 .game-code-section {
   background: #232e30;
-  border-radius: 18px;
-  padding: 2rem clamp(1.5rem, 5vw, 2.5rem); /* Responsive padding */
+  border-radius: clamp(12px, 2vw, 18px);
+  padding: clamp(1.5rem, 5vw, 2rem) clamp(1rem, 4vw, 2.5rem);
   box-shadow: 0 2px 24px 0 rgba(28, 37, 38, 0.18);
-  max-width: min(500px, 90vw); /* Better max-width handling */
+  max-width: min(500px, 90vw);
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -116,7 +122,7 @@ header p {
   transition: background 0.3s, color 0.3s;
   position: relative;
   z-index: 2;
-  box-sizing: border-box; /* Ensure padding is included in width */
+  box-sizing: border-box;
 }
 body.light-mode .game-code-section {
   background: #fff;
@@ -126,9 +132,10 @@ body.light-mode .game-code-section {
 
 .game-code-section h2 {
   color: #e0f7fa;
-  font-size: 2rem;
-  margin-bottom: 1rem;
+  font-size: clamp(1.5rem, 4vw, 2rem);
+  margin-bottom: clamp(0.75rem, 2vw, 1rem);
   transition: color 0.3s;
+  text-align: center;
 }
 body.light-mode .game-code-section h2 {
   color: #1c2526;
@@ -136,16 +143,17 @@ body.light-mode .game-code-section h2 {
 
 .game-input {
   width: 100%;
-  padding: 0.7rem 1rem;
-  border-radius: 8px;
+  padding: clamp(0.6rem, 2vw, 0.7rem) clamp(0.75rem, 2vw, 1rem);
+  border-radius: clamp(6px, 1vw, 8px);
   border: 1px solid #2a3a3c;
-  margin-bottom: 1rem;
-  font-size: 1.1rem;
+  margin-bottom: clamp(0.75rem, 2vw, 1rem);
+  font-size: clamp(0.9rem, 2.5vw, 1.1rem);
   background: #1c2526;
   color: #e0f7fa;
   transition: background 0.3s, color 0.3s, border 0.3s;
   text-align: center;
   letter-spacing: 0.1em;
+  box-sizing: border-box;
 }
 body.light-mode .game-input {
   background: #f7f7f7;
@@ -170,9 +178,10 @@ body.light-mode .game-input::placeholder {
 
 .game-btns {
   display: flex;
-  gap: 1rem;
-  margin-bottom: 1rem;
+  gap: clamp(0.5rem, 2vw, 1rem);
+  margin-bottom: clamp(0.75rem, 2vw, 1rem);
   width: 100%;
+  flex-wrap: wrap;
 }
 
 .main-btn,
@@ -180,14 +189,16 @@ body.light-mode .game-input::placeholder {
   background: #2a3a3c;
   color: #e0f7fa;
   border: none;
-  border-radius: 8px;
-  padding: 0.7rem 1.5rem;
-  font-size: 1rem;
+  border-radius: clamp(6px, 1vw, 8px);
+  padding: clamp(0.6rem, 2vw, 0.7rem) clamp(1rem, 3vw, 1.5rem);
+  font-size: clamp(0.875rem, 2.5vw, 1rem);
   cursor: pointer;
   transition: background 0.2s, color 0.2s, transform 0.2s;
   flex: 1;
+  min-width: clamp(120px, 30vw, 140px);
   font-weight: 500;
-  min-height: 48px;
+  min-height: clamp(40px, 8vw, 48px);
+  box-sizing: border-box;
 }
 body.light-mode .main-btn,
 body.light-mode .secondary-btn {
@@ -230,12 +241,14 @@ body.light-mode .secondary-btn:hover {
   color: #ff5252;
   font-weight: 500;
   text-align: center;
-  padding: 0.5rem;
-  border-radius: 8px;
+  padding: clamp(0.4rem, 1.5vw, 0.5rem);
+  border-radius: clamp(6px, 1vw, 8px);
   background: rgba(255, 82, 82, 0.1);
   border: 1px solid rgba(255, 82, 82, 0.2);
   display: none;
   width: 100%;
+  font-size: clamp(0.8rem, 2vw, 0.9rem);
+  box-sizing: border-box;
 }
 
 .error-message.show {
@@ -250,10 +263,10 @@ body.light-mode .secondary-btn:hover {
 
 #theme-toggle {
   position: fixed;
-  top: 2rem;
-  right: 2rem;
-  width: 48px;
-  height: 48px;
+  top: clamp(1rem, 3vw, 2rem);
+  right: clamp(1rem, 3vw, 2rem);
+  width: clamp(40px, 8vw, 48px);
+  height: clamp(40px, 8vw, 48px);
   background: none;
   border: none;
   cursor: pointer;
@@ -279,22 +292,23 @@ body.light-mode #theme-toggle {
 }
 
 #theme-toggle svg {
-  width: 24px;
-  height: 24px;
+  width: clamp(18px, 4vw, 24px);
+  height: clamp(18px, 4vw, 24px);
 }
 
 /* Rules Section Styles */
 .rules-section {
   background: #232e30;
-  border-radius: 18px;
-  padding: 2rem 2.5rem;
+  border-radius: clamp(12px, 2vw, 18px);
+  padding: clamp(1.5rem, 5vw, 2rem) clamp(1rem, 4vw, 2.5rem);
   box-shadow: 0 2px 24px 0 rgba(28, 37, 38, 0.18);
-  margin-top: 3rem;
-  max-width: 1200px;
+  margin-top: clamp(2rem, 6vw, 3rem);
+  max-width: min(1200px, 95vw);
   width: 100%;
   transition: background 0.3s, color 0.3s;
   position: relative;
   z-index: 2;
+  box-sizing: border-box;
 }
 
 body.light-mode .rules-section {
@@ -305,10 +319,11 @@ body.light-mode .rules-section {
 
 .rules-title {
   text-align: center;
-  margin-bottom: 2rem;
+  margin-bottom: clamp(1.5rem, 4vw, 2rem);
   color: #4caf50;
-  font-size: 2.5rem;
+  font-size: clamp(2rem, 6vw, 2.5rem);
   font-weight: 700;
+  line-height: 1.2;
 }
 
 body.light-mode .rules-title {
@@ -317,18 +332,20 @@ body.light-mode .rules-title {
 
 .rules-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr));
-  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr));
+  gap: clamp(1rem, 3vw, 1.5rem);
+  width: 100%;
 }
 
 .rule-card {
   background: rgba(255, 255, 255, 0.03);
   border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 12px;
-  padding: 1.5rem;
+  border-radius: clamp(8px, 1.5vw, 12px);
+  padding: clamp(1rem, 3vw, 1.5rem);
   transition: all 0.3s ease;
-  min-width: 0; /* Fixes flexbox overflow issues */
-  word-break: break-word; /* Prevent text overflow */
+  min-width: 0;
+  word-break: break-word;
+  box-sizing: border-box;
 }
 
 body.light-mode .rule-card {
@@ -343,9 +360,10 @@ body.light-mode .rule-card {
 
 .rule-card h3 {
   color: #2196f3;
-  margin-bottom: 1rem;
-  font-size: 1.25rem;
+  margin-bottom: clamp(0.75rem, 2vw, 1rem);
+  font-size: clamp(1.1rem, 3vw, 1.25rem);
   font-weight: 600;
+  line-height: 1.3;
 }
 
 body.light-mode .rule-card h3 {
@@ -353,9 +371,10 @@ body.light-mode .rule-card h3 {
 }
 
 .rule-card p {
-  margin-bottom: 1rem;
+  margin-bottom: clamp(0.75rem, 2vw, 1rem);
   opacity: 0.9;
   line-height: 1.6;
+  font-size: clamp(0.875rem, 2.5vw, 1rem);
 }
 
 .piece-rules, .special-moves {
@@ -396,11 +415,12 @@ body.light-mode .rule-item strong {
 }
 
 .rule-list li {
-  padding: 0.5rem 0;
-  padding-left: 1.5rem;
+  padding: clamp(0.4rem, 1.5vw, 0.5rem) 0;
+  padding-left: clamp(1.25rem, 3vw, 1.5rem);
   position: relative;
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
   line-height: 1.6;
+  font-size: clamp(0.8rem, 2.5vw, 0.9rem);
 }
 
 body.light-mode .rule-list li {
@@ -412,42 +432,21 @@ body.light-mode .rule-list li {
   position: absolute;
   left: 0;
   color: #4caf50;
-  font-size: 1.2rem;
+  font-size: clamp(1rem, 2.5vw, 1.2rem);
 }
 
 .rule-list li:last-child {
   border-bottom: none;
 }
 
-/* Mobile responsiveness */
-@media (max-width: 768px) {
-  .game-code-section {
-    padding: 1.5rem clamp(1rem, 4vw, 1.5rem);
-    margin: 1rem auto; /* Center the section */
+/* Fluid responsive design - no fixed breakpoints needed */
+@media (max-width: 600px) {
+  .game-btns {
+    flex-direction: column;
   }
   
-  .rules-grid {
-    grid-template-columns: 1fr;
-    gap: 1rem;
-  }
-  
-  .rule-card {
-    padding: 1.25rem;
+  .main-btn,
+  .secondary-btn {
+    min-width: 100%;
   }
 }
-
-@media (max-width: 480px) {
-  .game-code-section {
-    padding: 1.25rem clamp(0.75rem, 3vw, 1.25rem);
-    border-radius: 14px;
-  }
-  
-  .rule-card {
-    padding: 1rem;
-  }
-  
-  .rule-item {
-    padding: 0.75rem;
-  }
-}
-
