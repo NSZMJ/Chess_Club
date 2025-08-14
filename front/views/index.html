@@ -1,0 +1,693 @@
+<html>
+  <head>
+    {{> head}}
+    <link rel="stylesheet" href="/public/css/index.css" />
+    <style>
+      html, body {
+        height: 150%;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        background: #1c2526;
+        color: #e0f7fa;
+        transition: background 0.3s, color 0.3s;
+      }
+      body.light-mode {
+        background: #f7f7f7;
+        color: #222;
+      }
+      .container {
+        background: #232e30;
+        border-radius: 18px;
+        padding: 2rem 1rem;
+        box-shadow: 0 2px 24px 0 rgba(28, 37, 38, 0.18);
+        transition: background 0.3s, color 0.3s;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 60vh;
+        max-width: 95vw;
+        margin: 2rem auto 0 auto;
+      }
+      body.light-mode .container {
+        background: #fff;
+        color: #222;
+        box-shadow: 0 2px 24px 0 rgba(28, 37, 38, 0.08);
+      }
+      .top-center-svg {
+        display: flex;
+        justify-content: center;
+        padding: 0 0 0 0.3rem;
+        margin-top: 5rem;
+        margin-bottom: 1rem;
+      }
+      #main-svg {
+        width: 61px;
+        height: 115px;
+        max-width: 20vw;
+        max-height: 25vw;
+      }
+      .chess-club-title {
+        font-size: 4rem;
+        font-weight: 600;
+        margin-bottom: 1rem;
+      }
+      .game-code-section {
+        width: 100%;
+        max-width: 400px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      .game-input {
+        width: 100%;
+        max-width: 300px;
+        padding: 0.5rem;
+        margin-bottom: 1rem;
+        border-radius: 6px;
+        border: 1px solid #ccc;
+        font-size: 1rem;
+      }
+      .game-btns {
+        display: flex;
+        gap: 1rem;
+        margin-bottom: 1rem;
+      }
+      .main-btn, .secondary-btn {
+        padding: 0.5rem 1.2rem;
+        border-radius: 6px;
+        border: none;
+        font-size: 1rem;
+        cursor: pointer;
+      }
+      .main-btn {
+        background: #4caf50;
+        color: #fff;
+      }
+      .secondary-btn {
+        background: #2196f3;
+        color: #fff;
+      }
+      @media (max-width: 900px) {
+        .container {
+          padding: 1rem 0.5rem;
+        }
+        #main-svg {
+          max-width: 30vw;
+          max-height: 35vw;
+        }
+      }
+      @media (max-width: 600px) {
+        .container {
+          padding: 0.5rem 0.2rem;
+          border-radius: 8px;
+        }
+        .top-center-svg {
+          margin-top: 1rem;
+          margin-bottom: 1rem;
+        }
+        #main-svg {
+          max-width: 50vw;
+          max-height: 60vw;
+        }
+        .game-code-section {
+          max-width: 95vw;
+        }
+        .game-input {
+          max-width: 90vw;
+        }
+      }
+      @media (max-width: 400px) {
+        #main-svg {
+          max-width: 80vw;
+          max-height: 90vw;
+        }
+        .container {
+          padding: 0.2rem 0.1rem;
+        }
+      }
+      
+      /* How to Play Section Styles */
+      .how-to-play-section {
+        background: #232e30;
+        border-radius: 18px;
+        padding: 1.5rem 2rem;
+        box-shadow: 0 2px 24px 0 rgba(28, 37, 38, 0.18);
+        transition: background 0.3s, color 0.3s;
+        margin: 2rem 90rem;
+        max-width: 1200px;
+        width: 90%;
+      
+      }
+      
+      body.light-mode .how-to-play-section {
+        background: #fff;
+        color: #222;
+        box-shadow: 0 2px 24px 0 rgba(28, 37, 38, 0.08);
+      }
+      
+      .how-to-play-section h2 {
+        text-align: center;
+        margin-bottom: 1.5rem;
+        font-size: 1.8rem;
+        color: #4caf50;
+      }
+      
+      .rules-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 1.5rem;
+        max-width: 100%;
+      }
+      
+      .rule-category {
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 12px;
+        padding: 1.2rem;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+      }
+      
+      body.light-mode .rule-category {
+        background: rgba(0, 0, 0, 0.03);
+        border: 1px solid rgba(0, 0, 0, 0.1);
+      }
+      
+      .rule-category h3 {
+        color: #2196f3;
+        margin-bottom: 0.8rem;
+        font-size: 1.2rem;
+      }
+      
+      .rule-category p {
+        margin-bottom: 0.8rem;
+        line-height: 1.5;
+        font-size: 0.95rem;
+      }
+      
+      .piece-rules, .special-moves {
+        display: flex;
+        flex-direction: column;
+        gap: 0.6rem;
+      }
+      
+      .piece-rule, .special-move {
+        padding: 0.4rem;
+        background: rgba(255, 255, 255, 0.03);
+        border-radius: 6px;
+        border-left: 3px solid #4caf50;
+        font-size: 0.9rem;
+      }
+      
+      body.light-mode .piece-rule, 
+      body.light-mode .special-move {
+        background: rgba(0, 0, 0, 0.02);
+        border-left: 3px solid #4caf50;
+      }
+      
+      .rule-category ul {
+        list-style: none;
+        padding-left: 0;
+      }
+      
+      .rule-category li {
+        padding: 0.4rem 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        position: relative;
+        padding-left: 1.2rem;
+        font-size: 0.9rem;
+      }
+      
+      body.light-mode .rule-category li {
+        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+      }
+      
+      .rule-category li:before {
+        content: "♟";
+        position: absolute;
+        left: 0;
+        color: #4caf50;
+      }
+      
+      .rule-category li:last-child {
+        border-bottom: none;
+      }
+      
+      @media (max-width: 900px) {
+        .how-to-play-section {
+          padding: 1.2rem 1rem;
+          margin: 0.8rem auto;
+        }
+        .rules-container {
+          grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+          gap: 1.2rem;
+        }
+      }
+      
+      @media (max-width: 600px) {
+        .how-to-play-section {
+          padding: 1rem 0.8rem;
+          border-radius: 8px;
+          margin: 0.5rem auto;
+          width: 95%;
+        }
+        .how-to-play-section h2 {
+          font-size: 1.4rem;
+        }
+        .rule-category {
+          padding: 1rem;
+        }
+        .rules-container {
+          grid-template-columns: 1fr;
+          gap: 1rem;
+        }
+      }
+      
+      /* Footer Styles */
+      .footer {
+        background: #1a1a1a;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        padding: 1.5rem 0;
+        margin-top: 3rem;
+        transition: background 0.3s, border-color 0.3s;
+      }
+      
+      body.light-mode .footer {
+        background: #f0f0f0;
+        border-top: 1px solid rgba(0, 0, 0, 0.1);
+      }
+      
+      .footer-content {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 2rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 1rem;
+      }
+      
+      .footer-nav {
+        display: flex;
+        gap: 2rem;
+        flex-wrap: wrap;
+      }
+      
+      .footer-link {
+        color: #b0b0b0;
+        text-decoration: none;
+        font-size: 0.9rem;
+        transition: color 0.3s;
+        white-space: nowrap;
+      }
+      
+      body.light-mode .footer-link {
+        color: #666;
+      }
+      
+      .footer-link:hover {
+        color: #4caf50;
+      }
+      
+      .social-icons {
+        display: flex;
+        gap: 1rem;
+      }
+      
+      .social-icon {
+        color: #b0b0b0;
+        transition: color 0.3s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      
+      body.light-mode .social-icon {
+        color: #666;
+      }
+      
+      .social-icon:hover {
+        color: #4caf50;
+      }
+      
+      @media (max-width: 900px) {
+        .footer-content {
+          padding: 0 1.5rem;
+          flex-direction: column;
+          text-align: center;
+          gap: 1.5rem;
+        }
+        
+        .footer-nav {
+          justify-content: center;
+          gap: 1.5rem;
+        }
+      }
+      
+      @media (max-width: 600px) {
+        .footer {
+          padding: 1rem 0;
+          margin-top: 2rem;
+        }
+        
+        .footer-content {
+          padding: 0 1rem;
+        }
+        
+        .footer-nav {
+          gap: 1rem;
+          flex-direction: column;
+          align-items: center;
+        }
+        
+        .footer-link {
+          font-size: 0.85rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Theme Toggle Button (SVG Vector) -->
+    <button
+      id="theme-toggle"
+      aria-label="Toggle dark mode"
+      style="
+        position: absolute;
+        top: 24px;
+        right: 32px;
+        width: 40px;
+        height: 40px;
+        background: none;
+        border: none;
+        cursor: pointer;
+        z-index: 10;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      "
+    >
+      <span id="theme-toggle-icon">
+        <!-- Default: Moon SVG for dark mode -->
+        <svg
+          id="moon-icon"
+          width="28"
+          height="28"
+          viewBox="0 0 28 28"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M21.5 18.5C19.5 19.5 17 20 14.5 20C9.25329 20 5 15.7467 5 10.5C5 8 5.5 5.5 6.5 3.5C3.5 5.5 1.5 9 1.5 13C1.5 19.0228 6.47715 24 12.5 24C16.5 24 20 22 21.5 18.5Z"
+            fill="#fff"
+            stroke="#fff"
+            stroke-width="2"
+          />
+        </svg>
+        <!-- Sun SVG for light mode (hidden by default) -->
+        <svg
+          id="sun-icon"
+          width="28"
+          height="28"
+          viewBox="0 0 28 28"
+          fill="none"
+          style="display: none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <circle
+            cx="14"
+            cy="14"
+            r="6"
+            fill="#222"
+            stroke="#222"
+            stroke-width="2"
+          />
+          <g stroke="#222" stroke-width="2">
+            <line x1="14" y1="2" x2="14" y2="6" />
+            <line x1="14" y1="22" x2="14" y2="26" />
+            <line x1="2" y1="14" x2="6" y2="14" />
+            <line x1="22" y1="14" x2="26" y2="14" />
+            <line x1="5.05" y1="5.05" x2="7.88" y2="7.88" />
+            <line x1="20.12" y1="20.12" x2="22.95" y2="22.95" />
+            <line x1="5.05" y1="22.95" x2="7.88" y2="20.12" />
+            <line x1="20.12" y1="7.88" x2="22.95" y2="5.05" />
+          </g>
+        </svg>
+      </span>
+    </button>
+    <!-- Top Center SVG -->
+    <div class="top-center-svg" id="top-svg">
+      <svg
+        id="main-svg"
+        width="61"
+        height="115"
+        viewBox="0 0 61 115"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <rect
+          x="5.23047"
+          y="20.7578"
+          width="50.9905"
+          height="7.17188"
+          stroke="white"
+          stroke-width="5"
+        />
+        <rect
+          x="4.5"
+          y="99.1447"
+          width="50.9905"
+          height="13.2578"
+          stroke="white"
+          stroke-width="5"
+        />
+        <rect
+          x="5.23047"
+          y="2.5"
+          width="7.17185"
+          height="14.475"
+          stroke="white"
+          stroke-width="5"
+        />
+        <rect
+          x="49.049"
+          y="2.5"
+          width="7.17185"
+          height="14.475"
+          stroke="white"
+          stroke-width="5"
+        />
+        <rect
+          x="27.1396"
+          y="2.5"
+          width="7.17185"
+          height="14.475"
+          stroke="white"
+          stroke-width="5"
+        />
+        <path
+          d="M18.3104 93.2366L18.5879 71.8659L57.9907 55.2603V74.4651L18.3104 93.2366Z"
+          stroke="white"
+          stroke-width="5"
+        />
+        <path
+          d="M18.0669 33.1075L18.3461 54.4782L57.9906 71.0838V51.8791L18.0669 33.1075Z"
+          stroke="white"
+          stroke-width="5"
+        />
+        <path
+          d="M42.8975 93.2366L42.62 71.8659L3.21722 55.2603V74.4651L42.8975 93.2366Z"
+          stroke="white"
+          stroke-width="5"
+        />
+        <path
+          d="M42.8975 33.1075L42.62 54.4782L3.21722 71.0838V51.8791L42.8975 33.1075Z"
+          stroke="white"
+          stroke-width="5"
+        />
+      </svg>
+    </div>
+    <div class="container">
+      <section class="game-code-section">
+        <h1 class="chess-club-title">Chess club.xxx</h1>
+        <h2>Game code</h2>
+        <input type="text" id="codeInput" class="game-input" />
+        <div class="game-btns">
+          <button id="createGame" class="main-btn">Create game</button>
+          <button id="joinGame" class="secondary-btn">Join game</button>
+        </div>
+        <div style="color: red" id="errorMessage"></div>
+      </section>
+    </div>
+
+    <!-- How to Play Section -->
+    <div class="how-to-play-section">
+      <h2>How to Play Chess</h2>
+      
+      <div class="rules-container">
+        <div class="rule-category">
+          <h3>Objective</h3>
+          <p>Checkmate your opponent's king to win the game. This means the king is under attack and cannot escape capture.</p>
+        </div>
+
+        <div class="rule-category">
+          <h3>Setup</h3>
+          <p>The game starts with each player having 16 pieces: 1 king, 1 queen, 2 rooks, 2 bishops, 2 knights, and 8 pawns. White always moves first.</p>
+        </div>
+
+        <div class="rule-category">
+          <h3>Piece Movements</h3>
+          <div class="piece-rules">
+            <div class="piece-rule">
+              <strong>King:</strong> Moves one square in any direction (horizontally, vertically, or diagonally).
+            </div>
+            <div class="piece-rule">
+              <strong>Queen:</strong> Moves any number of squares in any direction.
+            </div>
+            <div class="piece-rule">
+              <strong>Rook:</strong> Moves any number of squares horizontally or vertically.
+            </div>
+            <div class="piece-rule">
+              <strong>Bishop:</strong> Moves any number of squares diagonally.
+            </div>
+            <div class="piece-rule">
+              <strong>Knight:</strong> Moves in an L-shape: 2 squares in one direction, then 1 square perpendicular.
+            </div>
+            <div class="piece-rule">
+              <strong>Pawn:</strong> Moves forward one square, captures diagonally. On first move, can advance 2 squares.
+            </div>
+          </div>
+        </div>
+
+        <div class="rule-category">
+          <h3>Special Moves</h3>
+          <div class="special-moves">
+            <div class="special-move">
+              <strong>Castling:</strong> King moves 2 squares toward a rook, and the rook moves to the square the king passed over.
+            </div>
+            <div class="special-move">
+              <strong>En Passant:</strong> A pawn can capture an opponent's pawn that just moved 2 squares forward.
+            </div>
+            <div class="special-move">
+              <strong>Pawn Promotion:</strong> When a pawn reaches the opposite end, it can be promoted to any other piece.
+            </div>
+          </div>
+        </div>
+
+        <div class="rule-category">
+          <h3>Game Rules</h3>
+          <ul>
+            <li>Players take turns moving one piece at a time</li>
+            <li>You cannot move through other pieces (except knights)</li>
+            <li>You can capture opponent pieces by moving to their square</li>
+            <li>Check occurs when your king is under attack</li>
+            <li>You must get out of check on your next move</li>
+            <li>Checkmate ends the game</li>
+            <li>Stalemate (no legal moves) results in a draw</li>
+          </ul>
+        </div>
+
+        <div class="rule-category">
+          <h3>Tips for Beginners</h3>
+          <ul>
+            <li>Control the center of the board</li>
+            <li>Develop your pieces early</li>
+            <li>Protect your king</li>
+            <li>Look for tactical opportunities</li>
+            <li>Think several moves ahead</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer Section -->
+    <footer class="footer">
+      <div class="footer-content">
+        <nav class="footer-nav">
+          <a href="#" class="footer-link">More Information</a>
+          <a href="#" class="footer-link">Blog</a>
+          <a href="#" class="footer-link">Terms & Conditions</a>
+          <a href="#" class="footer-link">Privacy</a>
+          <a href="#" class="footer-link">Cookies</a>
+          <a href="#" class="footer-link">Play Games</a>
+        </nav>
+        <div class="social-icons">
+          <a href="#" class="social-icon" aria-label="Discord">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515a.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0a12.64 12.64 0 0 0-.617-1.25a.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057a19.9 19.9 0 0 0 5.993 3.03a.078.078 0 0 0 .084-.028a14.09 14.09 0 0 0 1.226-1.994a.076.076 0 0 0-.041-.106a13.107 13.107 0 0 1-1.872-.892a.077.077 0 0 1-.008-.128a10.2 10.2 0 0 0 .372-.292a.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127a12.299 12.299 0 0 1-1.873.892a.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028a19.839 19.839 0 0 0 6.002-3.03a.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419c0-1.333.956-2.419 2.157-2.419c1.21 0 2.176 1.096 2.157 2.42c0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419c0-1.333.955-2.419 2.157-2.419c1.21 0 2.176 1.096 2.157 2.42c0 1.333-.946 2.418-2.157 2.418z"/>
+            </svg>
+          </a>
+          <a href="#" class="social-icon" aria-label="Facebook">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <script>
+      // Theme toggle logic
+      const themeToggle = document.getElementById("theme-toggle");
+      const prefersDark = window.matchMedia(
+        "(prefers-color-scheme: dark)"
+      ).matches;
+      const body = document.body;
+      const svg = document.getElementById("main-svg");
+      const moonIcon = document.getElementById("moon-icon");
+      const sunIcon = document.getElementById("sun-icon");
+      // Helper to set SVG color
+      function setSVGColor(color) {
+        svg
+          .querySelectorAll("[stroke]")
+          .forEach((el) => el.setAttribute("stroke", color));
+      }
+      // Helper to set background SVG and toggle icon
+      function setBackgroundSVG(light) {
+        if (light) {
+          body.classList.add("light-mode");
+          body.classList.remove("dark-mode");
+          setSVGColor("black");
+          sunIcon.style.display = "";
+          moonIcon.style.display = "none";
+        } else {
+          body.classList.remove("light-mode");
+          body.classList.add("dark-mode");
+          setSVGColor("white");
+          sunIcon.style.display = "none";
+          moonIcon.style.display = "";
+        }
+      }
+      // On load, set theme from localStorage or system preference
+      (function () {
+        const savedTheme = localStorage.getItem("theme");
+        if (savedTheme === "light") {
+          setBackgroundSVG(true);
+        } else if (savedTheme === "dark" || (!savedTheme && prefersDark)) {
+          setBackgroundSVG(false);
+        } else {
+          setBackgroundSVG(false);
+        }
+      })();
+      themeToggle.addEventListener("click", () => {
+        const isLight = body.classList.contains("light-mode");
+        setBackgroundSVG(!isLight);
+        localStorage.setItem("theme", !isLight ? "light" : "dark");
+      });
+      // forced place ment for black and white players
+      $("#createGame").on("click", function () {
+        window.location.replace("/white?code=" + $("#codeInput").val());
+      });
+      $("#joinGame").on("click", function () {
+        window.location.replace("/black?code=" + $("#codeInput").val());
+      });
+
+      var urlParams = new URLSearchParams(window.location.search);
+      if (urlParams.get("error") == "invalidCode") {
+        $("#errorMessage").text("Invalid invite code");
+      }
+    </script>
+  </body>
+</html>
