@@ -25,23 +25,70 @@ function onDragStart (source, piece, position, orientation) {
         return false
     }
 }
+// Add promotion UI
+function showPromotionDialog(callback) {
+    $("#promotionDialog").remove();
+    const dialog = $(`
+        <div id="promotionDialog" class="modal-overlay">
+            <div class="modal">
+                <div class="modal-title">Choose promotion</div>
+                <div class="modal-actions">
+                    <button class="promo-btn" data-piece="q">Queen</button>
+                    <button class="promo-btn" data-piece="r">Rook</button>
+                    <button class="promo-btn" data-piece="b">Bishop</button>
+                    <button class="promo-btn" data-piece="n">Knight</button>
+                </div>
+            </div>
+        </div>
+    `);
+    $("body").append(dialog);
+    $(".promo-btn").on("click", function() {
+        const piece = $(this).data("piece");
+        $("#promotionDialog").remove();
+        callback(piece);
+    });
+}
+
+function isPromotionMove(source, target, piece) {
+    // Only pawns promote
+    if (piece[1] !== 'P' && piece[1] !== 'p') return false;
+    // White pawn to 8th rank
+    if (piece[0] === 'w' && target[1] === '8') return true;
+    // Black pawn to 1st rank
+    if (piece[0] === 'b' && target[1] === '1') return true;
+    return false;
+}
+
 
 function onDrop (source, target) {
+    const piece = game.get(source);
+    // Only prompt for promotion if it's the player's move and a pawn is promoting
+    if (piece && isPromotionMove(source, target, (playerColor === 'white' ? 'w' : 'b') + piece.type.toUpperCase())) {
+        showPromotionDialog(function(promotion) {
+            let theMove = {
+                from: source,
+                to: target,
+                promotion: promotion
+            };
+            var move = game.move(theMove);
+            if (move === null) return 'snapback';
+            socket.emit('move', theMove);
+            updateStatus();
+            board.position(game.fen());
+        });
+        return;
+    }
     let theMove = {
         from: source,
         to: target,
-        promotion: 'q' // NOTE: always promote to a queen for simplicity
+        promotion: 'q' // fallback, only used if not a promotion
     };
-    // see if the move is legal
     var move = game.move(theMove);
-
-
-    // illegal move
-    if (move === null) return 'snapback'
-
+    if (move === null) return 'snapback';
     socket.emit('move', theMove);
-
-    updateStatus()
+    updateStatus();
+    // Ensure special moves like castling immediately reflect on the board
+    board.position(game.fen());
 }
 
 // New function for tap-to-move functionality
@@ -95,6 +142,8 @@ function onSquareClick(square) {
             // Legal move - send it to the server
             socket.emit('move', theMove);
             updateStatus();
+            // Immediately reflect special moves like castling locally
+            board.position(game.fen());
         }
         
         // Clear selection regardless of whether move was legal
