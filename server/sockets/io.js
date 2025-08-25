@@ -33,5 +33,12 @@ module.exports = io => {
             }
         });
 
+        // Forfeit handler
+        socket.on('forfeit', function() {
+            if (!currentCode) return;
+            io.to(currentCode).emit('opponentForfeit');
+            delete games[currentCode];
+        });
+
     });
 };
