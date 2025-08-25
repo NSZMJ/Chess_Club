@@ -3,133 +3,57 @@
     {{> head}}
   </head>
   <body>
-    <style>
-      html, body {
-        height: 100%;
-        margin: 0;
-        padding: 0;
-        overflow-x: hidden;
-      }
-      body {
-        background: #1c2526;
-        color: #e0f7fa;
-        transition: background 0.3s, color 0.3s;
-        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      }
-      body.light-mode {
-        background: #f7f7f7;
-        color: #222;
-      }
-      .center-container {
-        background: #232e30;
-        border-radius: 18px;
-        padding: 2rem 2.5rem;
-        box-shadow: 0 2px 24px 0 rgba(28, 37, 38, 0.18);
-        transition: background 0.3s, color 0.3s;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        min-height: 100vh;
-        max-width: 95vw;
-        margin: 0 auto;
-      }
-      body.light-mode .center-container {
-        background: #fff;
-        color: #222;
-        box-shadow: 0 2px 24px 0 rgba(28, 37, 38, 0.08);
-      }
-      #myBoard {
-        width: 700px;
-        max-width: 90vw;
-        min-width: 250px;
-        aspect-ratio: 1 / 1;
-        cursor: pointer; /* Indicate that squares are clickable */
-      }
-      
-      /* Highlight styles for selected squares */
-      .highlight-square {
-        background-color: rgba(76, 175, 80, 0.4) !important;
-        box-shadow: inset 0 0 0 3px rgba(76, 175, 80, 0.8) !important;
-      }
-      
-      /* Improve touch targets for mobile */
-      .square-55d63 {
-        cursor: pointer;
-        transition: background-color 0.2s ease;
-      }
-      
-      /* Hover effect for desktop */
-      @media (hover: hover) {
-        .square-55d63:hover {
-          background-color: rgba(76, 175, 80, 0.2) !important;
-        }
-      }
-      
-      /* Mobile-specific improvements */
-      @media (max-width: 900px) {
-        .center-container {
-          padding: 1rem 0.5rem;
-        }
-        #myBoard {
-          width: 90vw;
-          min-width: 180px;
-        }
-      }
-      @media (max-width: 600px) {
-        .center-container {
-          padding: 0.5rem 0.2rem;
-          border-radius: 8px;
-        }
-        #myBoard {
-          width: 98vw;
-          min-width: 120px;
-        }
-        
-        /* Larger touch targets on mobile */
-        .square-55d63 {
-          min-height: 40px;
-        }
-      }
-      @media (max-width: 400px) {
-        #myBoard {
-          width: 99vw;
-          min-width: 80px;
-        }
-      }
-      
-      /* Status and PGN styling */
-      label {
-        font-weight: 600;
-        margin-top: 1rem;
-        margin-bottom: 0.5rem;
-      }
-      
-      #status, #pgn {
-        background: rgba(255, 255, 255, 0.05);
-        padding: 0.5rem;
-        border-radius: 4px;
-        margin-bottom: 0.5rem;
-        word-break: break-word;
-        max-width: 100%;
-        overflow-wrap: break-word;
-      }
-      
-      body.light-mode #status,
-      body.light-mode #pgn {
-        background: rgba(0, 0, 0, 0.05);
-      }
-    </style>
     <div class="center-container">
-      <button id="theme-toggle" aria-label="Toggle dark mode" style="margin-bottom: 1rem; background: none; border: none; cursor: pointer; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;">
+      <button
+        id="theme-toggle"
+        aria-label="Toggle dark mode"
+        style="
+          margin-bottom: 1rem;
+          background: none;
+          border: none;
+          cursor: pointer;
+          width: 40px;
+          height: 40px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        "
+      >
         <span id="theme-toggle-icon">
           <!-- Moon SVG for dark mode (default) -->
-          <svg id="moon-icon" width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M21.5 18.5C19.5 19.5 17 20 14.5 20C9.25329 20 5 15.7467 5 10.5C5 8 5.5 5.5 6.5 3.5C3.5 5.5 1.5 9 1.5 13C1.5 19.0228 6.47715 24 12.5 24C16.5 24 20 22 21.5 18.5Z" fill="#fff" stroke="#fff" stroke-width="2"/>
+          <svg
+            id="moon-icon"
+            width="28"
+            height="28"
+            viewBox="0 0 28 28"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M21.5 18.5C19.5 19.5 17 20 14.5 20C9.25329 20 5 15.7467 5 10.5C5 8 5.5 5.5 6.5 3.5C3.5 5.5 1.5 9 1.5 13C1.5 19.0228 6.47715 24 12.5 24C16.5 24 20 22 21.5 18.5Z"
+              fill="#fff"
+              stroke="#fff"
+              stroke-width="2"
+            />
           </svg>
           <!-- Sun SVG for light mode (hidden by default) -->
-          <svg id="sun-icon" width="28" height="28" viewBox="0 0 28 28" fill="none" style="display: none" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="14" cy="14" r="6" fill="#222" stroke="#222" stroke-width="2"/>
+          <svg
+            id="sun-icon"
+            width="28"
+            height="28"
+            viewBox="0 0 28 28"
+            fill="none"
+            style="display: none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <circle
+              cx="14"
+              cy="14"
+              r="6"
+              fill="#222"
+              stroke="#222"
+              stroke-width="2"
+            />
             <g stroke="#222" stroke-width="2">
               <line x1="14" y1="2" x2="14" y2="6" />
               <line x1="14" y1="22" x2="14" y2="26" />
@@ -143,7 +67,7 @@
           </svg>
         </span>
       </button>
-      <div id="myBoard" style="width: 700px"></div>
+      <div id="myBoard"></div>
       <label>Status:</label>
       <div id="status"></div>
       <label>PGN:</label>
