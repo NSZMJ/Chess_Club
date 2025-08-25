@@ -36,7 +36,10 @@ module.exports = io => {
         // Forfeit handler
         socket.on('forfeit', function() {
             if (!currentCode) return;
-            io.to(currentCode).emit('opponentForfeit');
+            // Notify only the opponent
+            socket.to(currentCode).emit('opponentForfeit');
+            // Confirm to forfeiting player
+            socket.emit('youForfeited');
             delete games[currentCode];
         });
 
