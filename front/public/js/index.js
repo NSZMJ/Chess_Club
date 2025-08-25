@@ -5,6 +5,7 @@ var game = new Chess()
 var $status = $('#status')
 var $pgn = $('#pgn')
 let gameOver = false;
+let hasForfeited = false;
 
 // Variables for tap-to-move functionality
 let selectedSquare = null;
@@ -182,15 +183,20 @@ function updateStatus () {
     // checkmate?
     if (game.in_checkmate()) {
         status = 'Game over, ' + moveColor + ' is in checkmate.'
+        const winner = (moveColor === 'White') ? 'black' : 'white';
+        const iWon = (playerColor === winner);
+        setTimeout(function(){ window.location.replace('/result?outcome=' + (iWon ? 'win' : 'lose')); }, 800);
     }
 
     // draw?
     else if (game.in_draw()) {
         status = 'Game over, drawn position'
+        setTimeout(function(){ window.location.replace('/result?outcome=stalemate'); }, 800);
     }
 
     else if (gameOver) {
         status = 'Opponent disconnected, you win!'
+        $("#endControls").show();
     }
 
     else if (!gameHasStarted) {
@@ -243,4 +249,23 @@ socket.on('startGame', function() {
 socket.on('gameOverDisconnect', function() {
     gameOver = true;
     updateStatus()
+});
+
+// Forfeit flow
+$(document).on('click', '#homeBtn', function() {
+    window.location.replace('/');
+});
+
+$(document).on('click', '#forfeitBtn', function() {
+    if (hasForfeited) return;
+    hasForfeited = true;
+    socket.emit('forfeit', { code: urlParams.get('code') });
+    $("#status").html('You forfeited.');
+    $("#endControls").show();
+});
+
+socket.on('opponentForfeit', function() {
+    gameOver = true;
+    $("#status").html('Opponent forfeited. You win!');
+    $("#endControls").show();
 });
