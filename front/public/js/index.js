@@ -260,12 +260,21 @@ $(document).on('click', '#forfeitBtn', function() {
     if (hasForfeited) return;
     hasForfeited = true;
     socket.emit('forfeit', { code: urlParams.get('code') });
-    $("#status").html('You forfeited.');
+    $("#status").html('You forfeited. You lose.');
     $("#endControls").show();
+    setTimeout(function(){ window.location.replace('/result?outcome=lose'); }, 800);
 });
 
 socket.on('opponentForfeit', function() {
     gameOver = true;
     $("#status").html('Opponent forfeited. You win!');
     $("#endControls").show();
+    setTimeout(function(){ window.location.replace('/result?outcome=win'); }, 800);
+});
+
+socket.on('youForfeited', function() {
+    gameOver = true;
+    $("#status").html('You forfeited. You lose.');
+    $("#endControls").show();
+    setTimeout(function(){ window.location.replace('/result?outcome=lose'); }, 800);
 });
